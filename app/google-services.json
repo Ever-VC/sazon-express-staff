@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "433659660280",
+    "firebase_url": "https://sazon-express-default-rtdb.firebaseio.com",
+    "project_id": "sazon-express",
+    "storage_bucket": "sazon-express.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433659660280:android:ebf422e81cac7cc538b80d",
+        "android_client_info": {
+          "package_name": "com.evervc.saznexpressstaff"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "433659660280-hiun052ltm0bijiho0egtjaathonuee2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.evervc.saznexpressstaff",
+            "certificate_hash": "a86650205c9d8e3cf87924fc697353156d662dd7"
+          }
+        },
+        {
+          "client_id": "433659660280-55sj1kji3llfn91efckmiv7qpbqhqt0o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuR9ppZuYKmqrlGZ15vWF7Rkx79Meb7CU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "433659660280-55sj1kji3llfn91efckmiv7qpbqhqt0o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
