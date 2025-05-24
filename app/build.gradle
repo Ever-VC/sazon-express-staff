@@ -61,4 +61,15 @@ dependencies {
     // Para enviar notificaiones
     implementation libs.firebase.messaging
 
+    // Para usar el menu lateral
+    implementation libs.android.gif.drawable
+
+    // Para mostrar gifs
+    implementation libs.material.v130
+
+    // Para mostrar imagenes en el topbar
+    implementation libs.glide
+    annotationProcessor libs.compiler
+
+
 }

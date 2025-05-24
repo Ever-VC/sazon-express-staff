@@ -21,6 +21,7 @@ import com.evervc.saznexpressstaff.data.repositories.UsuarioRepositoryImpl;
 import com.evervc.saznexpressstaff.ui.admin.AdminHomeActivity;
 import com.evervc.saznexpressstaff.ui.chef.ChefHomeActivity;
 import com.evervc.saznexpressstaff.ui.utils.SelectorSubidorImagen;
+import com.evervc.saznexpressstaff.ui.utils.UsuarioSesion;
 import com.evervc.saznexpressstaff.ui.waiter.WaiterHomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -140,6 +141,7 @@ public class LoginActivity extends AppCompatActivity {
                     UsuarioRepository repo = new UsuarioRepositoryImpl();
                     repo.obtenerUsuarioActual().addOnSuccessListener(usuario -> {
                         if (usuario != null) {
+                            UsuarioSesion.establecerUsuario(usuario);
                             redirigirPorRol(usuario.getRol());
                         } else {
                             Toast.makeText(this, "No se encontró información del usuario", Toast.LENGTH_SHORT).show();
