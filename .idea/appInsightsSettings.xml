@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.evervc.saznexpressstaff" />
+                  <option name="mobileSdkAppId" value="1:433659660280:android:ebf422e81cac7cc538b80d" />
+                  <option name="projectId" value="sazon-express" />
+                  <option name="projectNumber" value="433659660280" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
