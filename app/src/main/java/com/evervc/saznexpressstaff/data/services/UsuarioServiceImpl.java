@@ -189,17 +189,4 @@ public class UsuarioServiceImpl implements UsuarioService {
         return repo.obtenerUsuarioActual();
     }
 
-    private String obtenerPrefijoRol(String rol) {
-        switch (rol.toLowerCase()) {
-            case "administrador":
-                return "ADM";
-            case "cocinero":
-                return "COC";
-            case "mesero":
-                return "MES";
-            default:
-                return "EMP"; // Por si en el futuro se añade otro tipo de rol
-        }
-    }
-
 }
