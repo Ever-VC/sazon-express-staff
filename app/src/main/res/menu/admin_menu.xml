@@ -27,21 +27,9 @@
         android:title="Gestión de empleados">
         <menu>
             <item
-                android:id="@+id/crud_admins"
+                android:id="@+id/gestion_empleados"
                 android:icon="@drawable/administrador"
-                android:title="Administradores"
-                android:checkable="true"
-                app:showAsAction="ifRoom"/>
-            <item
-                android:id="@+id/crud_cocineros"
-                android:icon="@drawable/cocinero"
-                android:title="Cocineros"
-                android:checkable="true"
-                app:showAsAction="ifRoom"/>
-            <item
-                android:id="@+id/crud_meseros"
-                android:icon="@drawable/empleado"
-                android:title="Meseros"
+                android:title="Gestionar empleados"
                 android:checkable="true"
                 app:showAsAction="ifRoom"/>
         </menu>
@@ -60,12 +48,6 @@
                 android:id="@+id/crud_platillos"
                 android:icon="@drawable/platillos"
                 android:title="Comandas"
-                android:checkable="true"
-                app:showAsAction="ifRoom"/>
-            <item
-                android:id="@+id/promociones"
-                android:icon="@drawable/promociones"
-                android:title="Promociones"
                 android:checkable="true"
                 app:showAsAction="ifRoom"/>
         </menu>

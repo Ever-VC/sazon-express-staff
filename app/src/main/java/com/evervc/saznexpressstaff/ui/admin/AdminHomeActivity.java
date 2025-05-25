@@ -68,14 +68,17 @@ public class AdminHomeActivity extends AppCompatActivity implements NavigationVi
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         boolean manejarEvento = false;
+        // Verifica la opcion seleccionada
         if(menuItem.getItemId()==R.id.dashboard){
             manejarEvento = true;
             cambiarFragmento(new HomeAdminFragment());
-        }else if (menuItem.getItemId()==R.id.crud_admins) {
+        }else if (menuItem.getItemId()==R.id.gestion_empleados) {
             manejarEvento = true;
             cambiarFragmento(new GestionAdminsFragment());
         } else if (menuItem.getItemId()==R.id.cerrar_sesion) {
             cerrarSesion();
+        } else if (menuItem.getItemId() == R.id.crud_comandas) {
+            // Llamas al fragmento de crud de comandas
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return manejarEvento;

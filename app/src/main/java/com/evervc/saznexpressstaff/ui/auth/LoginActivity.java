@@ -1,32 +1,51 @@
 package com.evervc.saznexpressstaff.ui.auth;
 
+import static com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CancellationSignal;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.credentials.Credential;
+import androidx.credentials.CredentialManager;
+import androidx.credentials.CredentialManagerCallback;
+import androidx.credentials.CustomCredential;
+import androidx.credentials.GetCredentialRequest;
+import androidx.credentials.GetCredentialResponse;
+import androidx.credentials.exceptions.GetCredentialException;
 
 import com.evervc.saznexpressstaff.MainActivity;
 import com.evervc.saznexpressstaff.R;
 import com.evervc.saznexpressstaff.data.models.Usuario;
 import com.evervc.saznexpressstaff.data.repositories.UsuarioRepository;
 import com.evervc.saznexpressstaff.data.repositories.UsuarioRepositoryImpl;
+import com.evervc.saznexpressstaff.data.services.UsuarioService;
+import com.evervc.saznexpressstaff.data.services.UsuarioServiceImpl;
 import com.evervc.saznexpressstaff.ui.admin.AdminHomeActivity;
 import com.evervc.saznexpressstaff.ui.chef.ChefHomeActivity;
 import com.evervc.saznexpressstaff.ui.utils.SelectorSubidorImagen;
 import com.evervc.saznexpressstaff.ui.utils.UsuarioSesion;
 import com.evervc.saznexpressstaff.ui.waiter.WaiterHomeActivity;
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.concurrent.Executors;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -34,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
     private SelectorSubidorImagen selectorImagen;
     private static final int CODIGO_SELECCION_IMAGEN = 1001;
     private EditText etEmailLogin, etPasswordLogin;
+    private CredentialManager credentialManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +67,8 @@ public class LoginActivity extends AppCompatActivity {
         });
         
         asociarElementosXml();
+
+        credentialManager = CredentialManager.create(getBaseContext());
 
         crearAdministradorPorDefecto();
     }
@@ -81,7 +103,6 @@ public class LoginActivity extends AppCompatActivity {
                                                             "1990-01-01",
                                                             "administrador",
                                                             "admin@sazon.com",
-                                                            "ADM-0001",
                                                             url,
                                                             "0000-0000",
                                                             "activo",
@@ -132,32 +153,70 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        auth.signInWithEmailAndPassword(correo, contrasenna).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                FirebaseUser usuarioFirebase = auth.getCurrentUser();
-                if (usuarioFirebase != null && usuarioFirebase.isEmailVerified()) {
-                    Toast.makeText(this, "Inicio de sesión correcto", Toast.LENGTH_SHORT).show();
-
-                    UsuarioRepository repo = new UsuarioRepositoryImpl();
-                    repo.obtenerUsuarioActual().addOnSuccessListener(usuario -> {
-                        if (usuario != null) {
-                            UsuarioSesion.establecerUsuario(usuario);
-                            redirigirPorRol(usuario.getRol());
-                        } else {
-                            Toast.makeText(this, "No se encontró información del usuario", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-                    Toast.makeText(this, "Debe verificar su correo antes de iniciar sesión", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-            }
+        UsuarioService service = new UsuarioServiceImpl();
+        service.loginConCorreo(correo, contrasenna).addOnSuccessListener(aVoid -> {
+            redirigirPorRol(UsuarioSesion.obtenerUsuario().getRol());
+        }).addOnFailureListener(e -> {
+            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         });
     }
 
-    public void loginConGoogle(View view) {
 
+    public void loginConGoogle(View view) {
+        iniciarGoogleAuth();
+    }
+
+    private void iniciarGoogleAuth() {
+        GetGoogleIdOption getGoogleIdOption = new GetGoogleIdOption
+                .Builder()
+                .setFilterByAuthorizedAccounts(false)
+                .setServerClientId("433659660280-55sj1kji3llfn91efckmiv7qpbqhqt0o.apps.googleusercontent.com")
+                .build();
+
+        GetCredentialRequest request = new GetCredentialRequest
+                .Builder()
+                .addCredentialOption(getGoogleIdOption)
+                .build();
+        //getBaseContext() en el contexto de lo siguiente
+        credentialManager.getCredentialAsync(
+                this,
+                request,
+                new CancellationSignal(),
+                Executors.newSingleThreadExecutor(),
+                new CredentialManagerCallback<>() {
+                    @Override
+                    public void onResult(GetCredentialResponse getCredentialResponse) {
+                        handleSignIn(getCredentialResponse.getCredential());
+                    }
+
+                    @Override
+                    public void onError(@NonNull GetCredentialException e) {
+                        Log.e("Error: ", e.getMessage());
+                    }
+                }
+        );
+    }
+
+    private void handleSignIn(Credential credential) {
+        if (credential instanceof CustomCredential && credential.getType().equals(TYPE_GOOGLE_ID_TOKEN_CREDENTIAL)) {
+            CustomCredential customCredential = (CustomCredential) credential;
+            Bundle credentialData = customCredential.getData();
+            GoogleIdTokenCredential googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credentialData);
+
+            UsuarioService service = new UsuarioServiceImpl();
+            service.loginConGoogle(googleIdTokenCredential.getIdToken())
+                    .addOnSuccessListener(v -> {
+                        redirigirPorRol(UsuarioSesion.obtenerUsuario().getRol());
+                    })
+                    .addOnFailureListener(e -> {
+                        System.out.println("HA LLEGADO AL ERROR, AHORA VA A VALIDAR QUE ESTE EN LOS PENDIENTES");
+                        if (e.getMessage().toLowerCase().contains("no está registrado")) {
+                            pedirTokenDeRegistro(googleIdTokenCredential.getIdToken());
+                        } else {
+                            Toast.makeText(this, "Error al iniciar sesión con Google: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+        }
     }
 
     private void redirigirPorRol(String rol) {
@@ -179,5 +238,36 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    private void pedirTokenDeRegistro(String idToken) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Ingrese su token de acceso");
+
+        final EditText input = new EditText(this);
+        input.setHint("Ej: ABC12345");
+        builder.setView(input);
+
+        builder.setPositiveButton("Validar", (dialog, which) -> {
+            String tokenIngresado = input.getText().toString().trim();
+            if (tokenIngresado.isEmpty()) {
+                Toast.makeText(this, "Debe ingresar el token", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            UsuarioService service = new UsuarioServiceImpl();
+            service.validarCuentaGoogleConToken(idToken, tokenIngresado)
+                    .addOnSuccessListener(v -> {
+                        redirigirPorRol(UsuarioSesion.obtenerUsuario().getRol());
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    });
+        });
+
+        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.cancel());
+
+        builder.show();
+    }
+
 
 }

@@ -2,6 +2,7 @@ package com.evervc.saznexpressstaff.ui.utils;
 
 import android.net.Uri;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -27,5 +28,21 @@ public class SubidorImagenes {
                         }).addOnFailureListener(escuchador::alFallar)
                 )
                 .addOnFailureListener(escuchador::alFallar);
+    }
+
+    /**
+     *
+     * @param ruta
+     * @param uriArchivo
+     * @return
+     */
+    public static Task<String> subirImagenTask(String ruta, Uri uriArchivo) {
+        StorageReference ref = FirebaseStorage.getInstance().getReference().child(ruta);
+        return ref.putFile(uriArchivo)
+                .continueWithTask(task -> {
+                    if (!task.isSuccessful()) throw task.getException();
+                    return ref.getDownloadUrl();
+                })
+                .continueWith(task -> task.getResult().toString());
     }
 }

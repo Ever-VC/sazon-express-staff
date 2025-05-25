@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="24dp"
+    android:background="@android:color/transparent"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="12dp"
+    app:cardBackgroundColor="@color/bg_screen"
+    style="@style/screen">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        style="@style/screen">
+
+        <!-- Cabecera -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="DETALLE DEL REGISTRO"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="?android:textColorPrimary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivHideDialogRegisterView" />
+
+        <ImageView
+            android:id="@+id/ivHideDialogRegisterView"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:padding="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Cerrar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvTitle"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+            app:tint="?android:textColorSecondary"
+            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
+        <!-- Tarjeta de título -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="?android:attr/colorBackground"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/ivIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_profile_image"
+                    tools:srcCompat="@drawable/user_gear"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="10dp"
+                    android:clipToOutline="true"
+                    android:scaleType="centerCrop"
+                    />
+
+                <TextView
+                    android:id="@+id/tvEmpleadoNombre"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Ever Samuel Vásquez"
+                    android:textSize="18sp"
+                    android:textColor="?android:textColorPrimary"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/ivIcon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Contenedor de datos -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvUserData"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="?android:attr/colorBackground"
+            app:layout_constraintTop_toBottomOf="@+id/cvTitle"
+            app:layout_constraintBottom_toTopOf="@+id/buttonLayout">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <!-- Correo -->
+                    <TextView
+                        android:id="@+id/tvCorreoLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Correo"
+                        android:textSize="14sp"
+                        android:textColor="?android:textColorSecondary"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvCorreo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="correo@gmail.com"
+                        android:textSize="16sp"
+                        android:textColor="?android:textColorPrimary"
+                        app:layout_constraintTop_toBottomOf="@id/tvCorreoLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <View
+                        android:id="@+id/divider1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/separationLine"
+                        app:layout_constraintTop_toBottomOf="@id/tvCorreo" />
+
+                    <!-- Estado del empleado -->
+                    <TextView
+                        android:id="@+id/tvEstadoEmpleadoLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Estado"
+                        android:textSize="14sp"
+                        android:textColor="?android:textColorSecondary"
+                        app:layout_constraintTop_toBottomOf="@id/divider1"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvEstadoEmpleado"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Activo"
+                        android:textSize="16sp"
+                        android:textColor="?android:textColorPrimary"
+                        app:layout_constraintTop_toBottomOf="@id/tvEstadoEmpleadoLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <View
+                        android:id="@+id/divider2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/separationLine"
+                        app:layout_constraintTop_toBottomOf="@id/tvEstadoEmpleado" />
+
+                    <!-- Fecha nacimiento -->
+                    <TextView
+                        android:id="@+id/tvFechaNacimientoLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="fecha de nacimiento"
+                        android:textSize="14sp"
+                        android:textColor="?android:textColorSecondary"
+                        app:layout_constraintTop_toBottomOf="@id/divider2"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvFechaNacimiento"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="01-01-1990"
+                        android:textSize="16sp"
+                        android:textColor="?android:textColorPrimary"
+                        app:layout_constraintTop_toBottomOf="@id/tvFechaNacimientoLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <View
+                        android:id="@+id/divider3"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/separationLine"
+                        app:layout_constraintTop_toBottomOf="@id/tvFechaNacimiento" />
+
+                    <!-- Carnet -->
+                    <TextView
+                        android:id="@+id/tvCarnetEmpleadoLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Notas"
+                        android:textSize="14sp"
+                        android:textColor="?android:textColorSecondary"
+                        app:layout_constraintTop_toBottomOf="@id/divider3"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvCarnetEmpleado"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Sin notas adicionales"
+                        android:textSize="16sp"
+                        android:textColor="?android:textColorPrimary"
+                        android:maxLines="5"
+                        android:ellipsize="end"
+                        app:layout_constraintTop_toBottomOf="@id/tvCarnetEmpleadoLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <View
+                        android:id="@+id/divider4"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/separationLine"
+                        app:layout_constraintTop_toBottomOf="@id/tvCarnetEmpleado" />
+
+                    <!-- Telefono -->
+                    <TextView
+                        android:id="@+id/tvTelefonoLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Fecha de registro"
+                        android:textSize="14sp"
+                        android:textColor="?android:textColorSecondary"
+                        app:layout_constraintTop_toBottomOf="@id/divider4"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvTelefono"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="01/01/2025"
+                        android:textSize="16sp"
+                        android:textColor="?android:textColorPrimary"
+                        app:layout_constraintTop_toBottomOf="@id/tvTelefonoLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <View
+                        android:id="@+id/divider5"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/separationLine"
+                        app:layout_constraintTop_toBottomOf="@id/tvTelefono" />
+
+                    <!-- NUEVO: FECHA DE MODIFICACIÓN -->
+                    <TextView
+                        android:id="@+id/tvFechaRegistroLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Fecha de modificación"
+                        android:textSize="14sp"
+                        android:textColor="?android:textColorSecondary"
+                        app:layout_constraintTop_toBottomOf="@id/divider5"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvFechaRegistro"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="01/01/2025"
+                        android:textSize="16sp"
+                        android:textColor="?android:textColorPrimary"
+                        app:layout_constraintTop_toBottomOf="@id/tvFechaRegistroLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Botones -->
+        <LinearLayout
+            android:id="@+id/buttonLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnActualizarEmpleado"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="Editar"
+                android:textAllCaps="false"
+                android:paddingVertical="1dp"
+                android:drawableTop="@android:drawable/ic_menu_edit"
+                app:cornerRadius="24dp"
+                style="@style/btnTransparent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEliminarEmpleado"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="Eliminar"
+                android:textAllCaps="false"
+                android:paddingVertical="0dp"
+                android:drawableTop="@android:drawable/ic_menu_delete"
+                app:cornerRadius="24dp"
+                style="@style/btnTransparent"/>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -17,4 +17,6 @@
     <color name="ligth_green">#56FF56</color>
     <color name="dark_green">#005A00</color>
     <color name="skin">#FFD194</color>
+    <color name="bg_screen">#F4F4F4</color>
+    <color name="separationLine">@color/light_gray</color>
 </resources>
