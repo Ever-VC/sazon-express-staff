@@ -67,15 +67,21 @@ public class AdminHomeActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        boolean manejarEvento = false;
+        // Verifica la opcion seleccionada
         if(menuItem.getItemId()==R.id.dashboard){
+            manejarEvento = true;
             cambiarFragmento(new HomeAdminFragment());
-        }else if (menuItem.getItemId()==R.id.crud_admins) {
+        }else if (menuItem.getItemId()==R.id.gestion_empleados) {
+            manejarEvento = true;
             cambiarFragmento(new GestionAdminsFragment());
         } else if (menuItem.getItemId()==R.id.cerrar_sesion) {
             cerrarSesion();
+        } else if (menuItem.getItemId() == R.id.crud_comandas) {
+            // Llamas al fragmento de crud de comandas
         }
         drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
+        return manejarEvento;
     }
 
     @Override
@@ -89,7 +95,7 @@ public class AdminHomeActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_superior, menu); // inflás el menú manualmente
+        getMenuInflater().inflate(R.menu.menu_superior, menu); // inflar el menú manualmente
 
         // Acceder al ítem con seguridad
         MenuItem itemPerfil = menu.findItem(R.id.item_perfil);
@@ -133,12 +139,7 @@ public class AdminHomeActivity extends AppCompatActivity implements NavigationVi
                     finish();
                 });
             }
-        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                navigationView.setCheckedItem(R.id.dashboard);
-            }
-        }).show();
+        }).setNegativeButton("No", null).show();
     }
 
     private void cambiarFragmento(Fragment fragment) {

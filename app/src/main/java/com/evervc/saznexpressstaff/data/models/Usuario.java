@@ -6,7 +6,6 @@ public class Usuario {
     private String fechaNacimiento; // formato "yyyy-MM-dd"
     private String rol; // "administrador", "mesero", "cocinero"
     private String correo;
-    private String carnetEmpleado;
     private String imagenUrl; // URL en Firebase Storage
     private String telefono;
     private String estado; // "activo" / "inactivo"
@@ -16,13 +15,12 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String id, String nombre, String fechaNacimiento, String rol, String correo, String carnetEmpleado, String imagenUrl, String telefono, String estado, String fechaRegistro, String tokenNotificaciones) {
+    public Usuario(String id, String nombre, String fechaNacimiento, String rol, String correo, String imagenUrl, String telefono, String estado, String fechaRegistro, String tokenNotificaciones) {
         this.id = id;
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
         this.rol = rol;
         this.correo = correo;
-        this.carnetEmpleado = carnetEmpleado;
         this.imagenUrl = imagenUrl;
         this.telefono = telefono;
         this.estado = estado;
@@ -68,14 +66,6 @@ public class Usuario {
 
     public void setCorreo(String correo) {
         this.correo = correo;
-    }
-
-    public String getCarnetEmpleado() {
-        return carnetEmpleado;
-    }
-
-    public void setCarnetEmpleado(String carnetEmpleado) {
-        this.carnetEmpleado = carnetEmpleado;
     }
 
     public String getImagenUrl() {
