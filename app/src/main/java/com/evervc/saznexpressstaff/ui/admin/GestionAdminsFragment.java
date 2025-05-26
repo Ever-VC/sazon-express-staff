@@ -81,7 +81,31 @@ public class GestionAdminsFragment extends Fragment {
     private void actualizarListaAdmins() {
         UsuarioService servicio = new UsuarioServiceImpl();
 
-        servicio.obtenerUsuariosPorRol("administrador").addOnSuccessListener(lista -> {
+        /*servicio.obtenerUsuariosPorRol("administrador").addOnSuccessListener(lista -> {
+            if (!lista.isEmpty()) {
+                tvMensajeInfo.setVisibility(View.GONE);
+
+                AdministradorAdaptador adaptador = new AdministradorAdaptador(
+                        lista,
+                        this::actualizarListaAdmins,
+                        getContext(),
+                        getChildFragmentManager(),
+                        activityResultLauncher
+                );
+
+                rcvRegistrosAdmin.setLayoutManager(new GridLayoutManager(
+                        getContext(), 1, GridLayoutManager.VERTICAL, false
+                ));
+                rcvRegistrosAdmin.setAdapter(adaptador);
+            } else {
+                tvMensajeInfo.setVisibility(View.VISIBLE);
+            }
+        }).addOnFailureListener(e -> {
+            System.out.println("Error al obtener usuarios: " + e.getMessage());
+            tvMensajeInfo.setVisibility(View.VISIBLE);
+        });*/
+
+        servicio.obtenerTodosLosUsuarios().addOnSuccessListener(lista -> {
             if (!lista.isEmpty()) {
                 tvMensajeInfo.setVisibility(View.GONE);
 
