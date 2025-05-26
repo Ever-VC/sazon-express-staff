@@ -1,5 +1,7 @@
 package com.evervc.saznexpressstaff.data.repositories;
 
+import android.util.Log;
+
 import com.evervc.saznexpressstaff.data.models.Usuario;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,7 +47,6 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         return db.orderByChild("rol").equalTo(rol).get()
                 .continueWith(task -> {
                     List<Usuario> lista = new ArrayList<>();
-                    System.out.println("Resultado crudo: " + task.getResult().toString());
                     if (task.isSuccessful() && task.getResult().exists()) {
                         for (DataSnapshot snap : task.getResult().getChildren()) {
                             Usuario usuario = snap.getValue(Usuario.class);
@@ -58,6 +59,23 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 });
     }
 
+    @Override
+    public Task<List<Usuario>> obtenerTodosLosUsuarios()
+    {
+        return db.get()
+                .continueWith(task -> {
+                    List<Usuario> lista = new ArrayList<>();
+                    if (task.isSuccessful() && task.getResult().exists()) {
+                        for (DataSnapshot snapshot : task.getResult().getChildren()) {
+                            Usuario usuario = snapshot.getValue(Usuario.class);
+                            if (usuario != null) {
+                                lista.add(usuario);
+                            }
+                        }
+                    }
+                    return lista;
+                });
+    }
     @Override
     public Task<Usuario> obtenerUsuarioPorId(String uid) {
         return db.child(uid).get()
