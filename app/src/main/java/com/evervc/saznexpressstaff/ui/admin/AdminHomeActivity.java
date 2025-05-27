@@ -72,12 +72,19 @@ public class AdminHomeActivity extends AppCompatActivity implements NavigationVi
         if(menuItem.getItemId()==R.id.dashboard){
             manejarEvento = true;
             cambiarFragmento(new HomeAdminFragment());
-        }else if (menuItem.getItemId()==R.id.gestion_empleados) {
+        }
+        else if (menuItem.getItemId()==R.id.gestion_empleados) {
             manejarEvento = true;
             cambiarFragmento(new GestionAdminsFragment());
-        } else if (menuItem.getItemId()==R.id.cerrar_sesion) {
+        }
+        else if (menuItem.getItemId() == R.id.crud_platillos) {  // Nuevo manejo
+            manejarEvento = true;
+            cambiarFragmento(new GestionPlatillosFragment());
+        }
+        else if (menuItem.getItemId()==R.id.cerrar_sesion) {
             cerrarSesion();
-        } else if (menuItem.getItemId() == R.id.crud_comandas) {
+        }
+        else if (menuItem.getItemId() == R.id.crud_comandas) {
             // Llamas al fragmento de crud de comandas
         }
         drawerLayout.closeDrawer(GravityCompat.START);
