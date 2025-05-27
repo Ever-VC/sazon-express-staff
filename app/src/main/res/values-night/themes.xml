@@ -4,4 +4,27 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+
+    <style name="screen">
+        <item name="android:background">@color/dark_gray</item>
+    </style>
+    <style name="text">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="btnTransparent">
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">12dp</item>
+    </style>
+    <style name="tvInfoMessage">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">40dp</item>
+    </style>
+    <style name="button_primario">
+        <item name="backgroundTint">@color/light_blue</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

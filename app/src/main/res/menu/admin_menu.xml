@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/main_item"
+        android:title="Menú general">
+        <menu>
+            <item
+                android:id="@+id/dashboard"
+                android:icon="@drawable/dashboard"
+                android:title="Dashboard"
+                android:checkable="true"
+                app:showAsAction="ifRoom"/>
+            <item
+                android:id="@+id/estadisticas"
+                android:icon="@drawable/estadisticas"
+                android:title="Estadísticas"
+                android:checkable="true"
+                app:showAsAction="ifRoom"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/empleados_item"
+        android:title="Gestión de empleados">
+        <menu>
+            <item
+                android:id="@+id/gestion_empleados"
+                android:icon="@drawable/administrador"
+                android:title="Gestionar empleados"
+                android:checkable="true"
+                app:showAsAction="ifRoom"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/platillos_item"
+        android:title="Gestión de platillos">
+        <menu>
+            <item
+                android:id="@+id/crud_comandas"
+                android:icon="@drawable/comanda"
+                android:title="Platillos"
+                android:checkable="true"
+                app:showAsAction="ifRoom"/>
+            <item
+                android:id="@+id/crud_platillos"
+                android:icon="@drawable/platillos"
+                android:title="Comandas"
+                android:checkable="true"
+                app:showAsAction="ifRoom"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/sesion"
+        android:title="Sesión actual">
+        <menu>
+            <item
+                android:id="@+id/cerrar_sesion"
+                android:icon="@drawable/cerrar_sesion"
+                android:title="Cerrar sesión"
+                android:checkable="true"
+                app:showAsAction="ifRoom"/>
+        </menu>
+    </item>
+</menu>
