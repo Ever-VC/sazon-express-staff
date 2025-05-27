@@ -7,4 +7,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.waiter.WaiterHomeActivity">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="129dp"
+        android:text="HOLA MUNDO DESDE MESERO"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
