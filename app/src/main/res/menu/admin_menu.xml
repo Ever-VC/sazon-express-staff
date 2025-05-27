@@ -39,14 +39,14 @@
         android:title="Gestión de platillos">
         <menu>
             <item
-                android:id="@+id/crud_comandas"
-                android:icon="@drawable/comanda"
+                android:id="@+id/crud_platillos"
+                android:icon="@drawable/platillos"
                 android:title="Platillos"
                 android:checkable="true"
                 app:showAsAction="ifRoom"/>
             <item
-                android:id="@+id/crud_platillos"
-                android:icon="@drawable/platillos"
+                android:id="@+id/crud_comandas"
+                android:icon="@drawable/comanda"
                 android:title="Comandas"
                 android:checkable="true"
                 app:showAsAction="ifRoom"/>
