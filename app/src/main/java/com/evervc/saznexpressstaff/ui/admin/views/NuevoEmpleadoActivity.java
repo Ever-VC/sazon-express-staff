@@ -9,8 +9,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -48,6 +50,8 @@ public class NuevoEmpleadoActivity extends AppCompatActivity {
     private Spinner spRoles;
     private DatabaseReference dbRef;
     private Usuario usuarioEdit = null;
+    private TextView tvTituloNuevoEmpleado;
+    private Button btnAddNewRegister;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -66,6 +70,9 @@ public class NuevoEmpleadoActivity extends AppCompatActivity {
         etTelefono = findViewById(R.id.etTelefonoNuevoEmpleado);
         etFechaNacimiento = findViewById(R.id.etFechaNacimiento);
         spRoles = findViewById(R.id.spRoles);
+        tvTituloNuevoEmpleado = findViewById(R.id.tvTituloNuevoEmpleado);
+        btnAddNewRegister = findViewById(R.id.btnAddNewRegister);
+
         dbRef = FirebaseDatabase.getInstance().getReference("usuarios_pendientes");
 
         uidUsuarioAEditar = getIntent().getStringExtra("uidUsuarioAEditar");
@@ -86,6 +93,8 @@ public class NuevoEmpleadoActivity extends AppCompatActivity {
                 if (!(usuario == null)) {
                     usuarioEdit = usuario;
                     runOnUiThread(() -> {
+                        tvTituloNuevoEmpleado.setText("ACTUALIZAR EMPLEADO");
+                        btnAddNewRegister.setText("Actualizar");
                         etNombre.setText(usuario.getNombre());
                         etFechaNacimiento.setText(usuario.getFechaNacimiento());
                         etTelefono.setText(usuario.getTelefono());
@@ -99,7 +108,6 @@ public class NuevoEmpleadoActivity extends AppCompatActivity {
             });
 
         }
-
         // Selector de fecha
         etFechaNacimiento.setOnClickListener(v -> mostrarSelectorFecha());
     }
