@@ -45,7 +45,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class NuevoEmpleadoActivity extends AppCompatActivity {
-    private String uidUsuarioAEditar = "__NULL__";
+    private String uidUsuarioAEditar;
     private EditText etNombre, etCorreo, etTelefono, etFechaNacimiento;
     private Spinner spRoles;
     private DatabaseReference dbRef;
@@ -87,7 +87,7 @@ public class NuevoEmpleadoActivity extends AppCompatActivity {
         spRoles.setAdapter(adapter);
 
         // Si se ha recibido un uid para editar un usuario, carga la información
-        if (!uidUsuarioAEditar.equals("uidUsuarioAEditar")) {
+        if (uidUsuarioAEditar != null) {
             UsuarioService usuarioService = new UsuarioServiceImpl();
             usuarioService.obtenerUsuarioPorId(uidUsuarioAEditar).addOnSuccessListener(usuario -> {
                 if (!(usuario == null)) {
