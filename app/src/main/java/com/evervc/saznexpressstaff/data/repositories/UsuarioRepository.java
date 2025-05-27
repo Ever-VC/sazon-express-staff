@@ -11,6 +11,7 @@ public interface UsuarioRepository {
     Task<Void> actualizarToken(String nuevoToken);
     Task<Void> actualizarEstado(String estado);
     Task<List<Usuario>> obtenerUsuariosPorRol(String rol);
+    Task<List<Usuario>> obtenerTodosLosUsuarios();
     Task<Usuario> obtenerUsuarioPorId(String uid);
     Task<Void> actualizarUsuario(Usuario usuario);
     Task<Void> eliminarUsuario(String uid);

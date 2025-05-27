@@ -11,6 +11,7 @@ public interface UsuarioService {
     Task<Void> crearUsuario(Usuario usuario, String password, Uri uriImagen);
     Task<List<Usuario>> obtenerUsuariosPorRol(String rol);
     Task<Usuario> obtenerUsuarioPorId(String uid);
+    Task<List<Usuario>> obtenerTodosLosUsuarios();
     Task<Void> actualizarUsuario(Usuario usuario);
     Task<Void> eliminarUsuario(String uid);
     Task<Void> actualizarEstado(String uid, String nuevoEstado);
@@ -18,6 +19,4 @@ public interface UsuarioService {
     Task<Void> loginConCorreo(String correo, String contrasenna);
     Task<Void> loginConGoogle(String idToken);
     Task<Void> validarCuentaGoogleConToken(String idToken, String token);
-
-
 }
