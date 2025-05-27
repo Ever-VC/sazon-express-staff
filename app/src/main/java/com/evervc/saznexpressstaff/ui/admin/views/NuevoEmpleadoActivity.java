@@ -9,8 +9,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -23,6 +25,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.evervc.saznexpressstaff.R;
+import com.evervc.saznexpressstaff.data.models.Usuario;
+import com.evervc.saznexpressstaff.data.services.UsuarioService;
+import com.evervc.saznexpressstaff.data.services.UsuarioServiceImpl;
+import com.evervc.saznexpressstaff.ui.utils.SubidorImagenes;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -39,10 +45,13 @@ import java.util.Locale;
 import java.util.Map;
 
 public class NuevoEmpleadoActivity extends AppCompatActivity {
-
+    private String uidUsuarioAEditar = "__NULL__";
     private EditText etNombre, etCorreo, etTelefono, etFechaNacimiento;
     private Spinner spRoles;
     private DatabaseReference dbRef;
+    private Usuario usuarioEdit = null;
+    private TextView tvTituloNuevoEmpleado;
+    private Button btnAddNewRegister;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -61,7 +70,12 @@ public class NuevoEmpleadoActivity extends AppCompatActivity {
         etTelefono = findViewById(R.id.etTelefonoNuevoEmpleado);
         etFechaNacimiento = findViewById(R.id.etFechaNacimiento);
         spRoles = findViewById(R.id.spRoles);
+        tvTituloNuevoEmpleado = findViewById(R.id.tvTituloNuevoEmpleado);
+        btnAddNewRegister = findViewById(R.id.btnAddNewRegister);
+
         dbRef = FirebaseDatabase.getInstance().getReference("usuarios_pendientes");
+
+        uidUsuarioAEditar = getIntent().getStringExtra("uidUsuarioAEditar");
 
         // Spinner de roles
         ArrayList<String> roles = new ArrayList<>();
@@ -72,6 +86,28 @@ public class NuevoEmpleadoActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spRoles.setAdapter(adapter);
 
+        // Si se ha recibido un uid para editar un usuario, carga la información
+        if (!uidUsuarioAEditar.equals("uidUsuarioAEditar")) {
+            UsuarioService usuarioService = new UsuarioServiceImpl();
+            usuarioService.obtenerUsuarioPorId(uidUsuarioAEditar).addOnSuccessListener(usuario -> {
+                if (!(usuario == null)) {
+                    usuarioEdit = usuario;
+                    runOnUiThread(() -> {
+                        tvTituloNuevoEmpleado.setText("ACTUALIZAR EMPLEADO");
+                        btnAddNewRegister.setText("Actualizar");
+                        etNombre.setText(usuario.getNombre());
+                        etFechaNacimiento.setText(usuario.getFechaNacimiento());
+                        etTelefono.setText(usuario.getTelefono());
+                        etCorreo.setText(usuario.getCorreo());
+                    });
+                }
+            }).addOnFailureListener(e -> {
+                System.out.println("Error al obtener usuarios: " + e.getMessage());
+                Toast.makeText(this, "No se ha podido cargar la información.", Toast.LENGTH_SHORT).show();
+                finish();
+            });
+
+        }
         // Selector de fecha
         etFechaNacimiento.setOnClickListener(v -> mostrarSelectorFecha());
     }
@@ -96,57 +132,75 @@ public class NuevoEmpleadoActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void addRegister(View view) {
         String nombre = etNombre.getText().toString().trim();
-        String correo = etCorreo.getText().toString().trim();
         String telefono = etTelefono.getText().toString().trim();
         String fechaNacimiento = etFechaNacimiento.getText().toString().trim();
         String rol = spRoles.getSelectedItem().toString();
 
-        if (nombre.isEmpty() || correo.isEmpty() || telefono.isEmpty() || fechaNacimiento.isEmpty()) {
+        if (nombre.isEmpty() || telefono.isEmpty() || fechaNacimiento.isEmpty()) {
             Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String token = generarTokenUnico();
-        String fechaRegistro = LocalDateTime.now().toString();
+        if (usuarioEdit != null) {
+            usuarioEdit.setNombre(nombre);
+            usuarioEdit.setTelefono(telefono);
+            usuarioEdit.setFechaNacimiento(fechaNacimiento);
+            usuarioEdit.setRol(rol);
 
-        Uri imagenPorDefecto = obtenerUriDeDrawable(R.drawable.user);
-        if (imagenPorDefecto == null) {
-            Toast.makeText(this, "No se pudo cargar la imagen por defecto", Toast.LENGTH_SHORT).show();
-            return;
+            UsuarioService usuarioService = new UsuarioServiceImpl();
+            usuarioService.actualizarUsuario(usuarioEdit);
+
+            Toast.makeText(NuevoEmpleadoActivity.this, "Empleado actualizado.", Toast.LENGTH_LONG).show();
+            setResult(RESULT_OK);
+            finish();
+
+        } else {
+            String correo = etCorreo.getText().toString().trim();
+
+            if (correo.isEmpty()) return;
+
+            String token = generarTokenUnico();
+            String fechaRegistro = LocalDateTime.now().toString();
+
+            Uri imagenPorDefecto = obtenerUriDeDrawable(R.drawable.user);
+            if (imagenPorDefecto == null) {
+                Toast.makeText(this, "No se pudo cargar la imagen por defecto", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String rutaStorage = "usuarios_pendientes/" + token + "/perfil.jpg";
+
+            SubidorImagenes.subirImagen(rutaStorage, imagenPorDefecto, new SubidorImagenes.EscuchadorSubida() {
+                @Override
+                public void alSubir(String urlDescarga) {
+                    Map<String, Object> nuevoEmpleado = new HashMap<>();
+                    nuevoEmpleado.put("nombre", nombre);
+                    nuevoEmpleado.put("correo", correo);
+                    nuevoEmpleado.put("telefono", telefono);
+                    nuevoEmpleado.put("fechaNacimiento", fechaNacimiento);
+                    nuevoEmpleado.put("rol", rol);
+                    nuevoEmpleado.put("fechaRegistro", fechaRegistro);
+                    nuevoEmpleado.put("estado", "pendiente");
+                    nuevoEmpleado.put("tokenRegistro", token);
+                    nuevoEmpleado.put("imagenUrl", urlDescarga);
+
+                    dbRef.child(token).setValue(nuevoEmpleado)
+                            .addOnSuccessListener(unused -> {
+                                enviarCorreoConToken(correo, token);
+                                Toast.makeText(NuevoEmpleadoActivity.this, "Empleado registrado y correo enviado.", Toast.LENGTH_LONG).show();
+                                finish();
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(NuevoEmpleadoActivity.this, "Error al registrar empleado: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
+                }
+
+                @Override
+                public void alFallar(Exception e) {
+                    Toast.makeText(NuevoEmpleadoActivity.this, "Error al subir imagen: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
-
-        String rutaStorage = "usuarios_pendientes/" + token + "/perfil.jpg";
-
-        com.evervc.saznexpressstaff.ui.utils.SubidorImagenes.subirImagen(rutaStorage, imagenPorDefecto, new com.evervc.saznexpressstaff.ui.utils.SubidorImagenes.EscuchadorSubida() {
-            @Override
-            public void alSubir(String urlDescarga) {
-                Map<String, Object> nuevoEmpleado = new HashMap<>();
-                nuevoEmpleado.put("nombre", nombre);
-                nuevoEmpleado.put("correo", correo);
-                nuevoEmpleado.put("telefono", telefono);
-                nuevoEmpleado.put("fechaNacimiento", fechaNacimiento);
-                nuevoEmpleado.put("rol", rol);
-                nuevoEmpleado.put("fechaRegistro", fechaRegistro);
-                nuevoEmpleado.put("estado", "pendiente");
-                nuevoEmpleado.put("tokenRegistro", token);
-                nuevoEmpleado.put("imagenUrl", urlDescarga);
-
-                dbRef.child(token).setValue(nuevoEmpleado)
-                        .addOnSuccessListener(unused -> {
-                            enviarCorreoConToken(correo, token);
-                            Toast.makeText(NuevoEmpleadoActivity.this, "Empleado registrado y correo enviado.", Toast.LENGTH_LONG).show();
-                            finish();
-                        })
-                        .addOnFailureListener(e -> {
-                            Toast.makeText(NuevoEmpleadoActivity.this, "Error al registrar empleado: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        });
-            }
-
-            @Override
-            public void alFallar(Exception e) {
-                Toast.makeText(NuevoEmpleadoActivity.this, "Error al subir imagen: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 

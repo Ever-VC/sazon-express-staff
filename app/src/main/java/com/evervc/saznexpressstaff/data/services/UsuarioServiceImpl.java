@@ -164,6 +164,10 @@ public class UsuarioServiceImpl implements UsuarioService {
         return repo.obtenerUsuariosPorRol(rol);
     }
 
+    public Task<List<Usuario>> obtenerTodosLosUsuarios() {
+        return repo.obtenerTodosLosUsuarios();
+    }
+
     // Obtener un usuario por su ID
     public Task<Usuario> obtenerUsuarioPorId(String uid) {
         return repo.obtenerUsuarioPorId(uid);
