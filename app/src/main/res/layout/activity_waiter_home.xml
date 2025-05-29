@@ -6,16 +6,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.waiter.WaiterHomeActivity">
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationW"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="110dp"
-        android:layout_marginEnd="129dp"
-        android:text="HOLA MUNDO DESDE MESERO"
+        app:itemIconTint="@color/navigation_bottom_items_color"
+        app:itemTextColor="@color/navigation_bottom_items_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:menu="@menu/menu_empleados" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fcvMesero"
+        android:name="com.evervc.saznexpressstaff.ui.admin.GestionComandasFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationW"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

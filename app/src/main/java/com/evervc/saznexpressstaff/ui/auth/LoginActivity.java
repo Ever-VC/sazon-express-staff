@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     private DatabaseReference db = FirebaseDatabase.getInstance().getReference("usuarios");
     private SelectorSubidorImagen selectorImagen;
     private static final int CODIGO_SELECCION_IMAGEN = 1001;
-    private EditText etEmailLogin, etPasswordLogin;
+    private EditText editCorreoEmpleado, editPassword;
     private CredentialManager credentialManager;
 
     @Override
@@ -74,8 +74,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void asociarElementosXml() {
-        etEmailLogin = findViewById(R.id.etEmailLogin);
-        etPasswordLogin = findViewById(R.id.etPasswordLogin);
+        editCorreoEmpleado = findViewById(R.id.editCorreoEmpleado);
+        editPassword = findViewById(R.id.editPassword);
     }
 
     private void crearAdministradorPorDefecto() {
@@ -145,8 +145,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        String correo = etEmailLogin.getText().toString();
-        String contrasenna = etPasswordLogin.getText().toString();
+        String correo = editCorreoEmpleado.getText().toString();
+        String contrasenna = editPassword.getText().toString();
 
         if (correo.isEmpty() || contrasenna.isEmpty()) {
             Toast.makeText(this, "Debe rellenar todos los campos del formulario", Toast.LENGTH_SHORT).show();

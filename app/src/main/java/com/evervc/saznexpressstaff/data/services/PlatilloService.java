@@ -12,4 +12,5 @@ public interface PlatilloService {
     Task<Void> actualizarPlatillo(Platillo platillo, Uri nuevaImagenUri);
     Task<Void> eliminarPlatillo(String id);
     Task<Void> actualizarDisponibilidad(String id, boolean disponible);
+    Task<Platillo> obtenerPlatilloPorId(String id);
 }
