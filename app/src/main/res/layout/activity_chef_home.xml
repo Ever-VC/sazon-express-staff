@@ -7,4 +7,25 @@
     android:layout_height="match_parent"
     tools:context=".ui.chef.ChefHomeActivity">
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemIconTint="@color/navigation_bottom_items_color"
+        app:itemTextColor="@color/navigation_bottom_items_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:menu="@menu/menu_empleados" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fcvCocinero"
+        android:name="com.evervc.saznexpressstaff.ui.admin.GestionComandasFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,12 +16,16 @@ public class SelectorSubidorImagen {
     private final int codigo;
     private final String rutaStorage;
     private final EscuchadorSubida escuchador;
+    private Uri uriSeleccionada;
 
     public SelectorSubidorImagen(Activity actividad, int codigo, String rutaStorage, EscuchadorSubida escuchador) {
         this.actividad = actividad;
         this.codigo = codigo;
         this.rutaStorage = rutaStorage;
         this.escuchador = escuchador;
+    }
+    public Uri getUriSeleccionada() {
+        return uriSeleccionada;
     }
 
     public void iniciarSeleccion() {
@@ -30,9 +34,27 @@ public class SelectorSubidorImagen {
         actividad.startActivityForResult(intent, codigo);
     }
 
+    /*public void procesarResultado(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == codigo && resultCode == Activity.RESULT_OK && data != null) {
+            Uri uri = data.getData();
+            SubidorImagenes.subirImagen(rutaStorage, uri, new SubidorImagenes.EscuchadorSubida() {
+                @Override
+                public void alSubir(String url) {
+                    escuchador.alSubir(url);
+                }
+
+                @Override
+                public void alFallar(Exception e) {
+                    escuchador.alFallar(e);
+                }
+            });
+        }
+    }*/
     public void procesarResultado(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == codigo && resultCode == Activity.RESULT_OK && data != null) {
             Uri uri = data.getData();
+            this.uriSeleccionada = uri; // IMPORTANTE: guardamos la URI seleccionada
+
             SubidorImagenes.subirImagen(rutaStorage, uri, new SubidorImagenes.EscuchadorSubida() {
                 @Override
                 public void alSubir(String url) {
