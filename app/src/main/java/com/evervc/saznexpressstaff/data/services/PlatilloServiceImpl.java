@@ -54,4 +54,9 @@ public class PlatilloServiceImpl implements PlatilloService{
     public Task<Void> actualizarDisponibilidad(String id, boolean disponible) {
         return repo.actualizarDisponibilidad(id, disponible);
     }
+
+    @Override
+    public Task<Platillo> obtenerPlatilloPorId(String id) {
+        return repo.obtenerPlatilloPorId(id);
+    }
 }

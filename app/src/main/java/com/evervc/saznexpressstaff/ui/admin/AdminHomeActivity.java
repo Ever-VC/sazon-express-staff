@@ -85,7 +85,8 @@ public class AdminHomeActivity extends AppCompatActivity implements NavigationVi
             cerrarSesion();
         }
         else if (menuItem.getItemId() == R.id.crud_comandas) {
-            // Llamas al fragmento de crud de comandas
+            manejarEvento = true;
+            cambiarFragmento(new GestionComandasFragment());
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return manejarEvento;
@@ -131,7 +132,6 @@ public class AdminHomeActivity extends AppCompatActivity implements NavigationVi
     }
 
     private void cerrarSesion() {
-        Handler handler = new Handler(Looper.getMainLooper());
         AlertDialog.Builder mensajeDeConfirmacion = new AlertDialog.Builder(this);
         mensajeDeConfirmacion.setTitle("¿Está seguro que desea cerrar sesión?");
         mensajeDeConfirmacion.setMessage("Será regresado a la pantalla de inicio de sesión.");

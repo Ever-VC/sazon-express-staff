@@ -38,140 +38,108 @@
         android:id="@+id/tvLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/notosans_bold"
         android:gravity="center"
         android:text="@string/app_login_titulo"
-        android:textColor="@color/skin"
+        android:textColor="@color/white"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/tvSubtitleLogin"
         tools:layout_editor_absoluteX="0dp" />
 
-    <EditText
-        android:id="@+id/etEmailLogin"
-        android:layout_width="320dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/campoCorreo"
+        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/input_style"
-        android:ems="10"
-        android:hint="Correo..."
-        android:inputType="text"
-        android:textColor="@color/darknes_red"
-        android:textColorHint="@color/light_gray"
-        android:padding="10dp"
-        android:text=""
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        app:boxStrokeColor="@color/white"
+        app:counterEnabled="true"
+        app:counterMaxLength="40"
+        app:endIconMode="clear_text"
+        app:helperText="Requerido*"
+        app:hintTextColor="@color/light_gray"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/tvLogin"
+        app:startIconDrawable="@drawable/email"
+        app:startIconTint="@color/white">
 
-    <EditText
-        android:id="@+id/etPasswordLogin"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/input_style"
-        android:ems="10"
-        android:hint="Contraseña..."
-        android:inputType="textPassword"
-        android:textColor="@color/darknes_red"
-        android:textColorHint="@color/light_gray"
-        android:padding="10dp"
-        android:text=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEmailLogin" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editCorreoEmpleado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correo electrónico..."
+            android:inputType="text"
+            android:outlineSpotShadowColor="@color/white"
+            android:textColor="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <CheckBox
-        android:id="@+id/cbShowPassword"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/campoPassword"
+        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
+        android:layout_gravity="center"
         android:layout_marginTop="8dp"
-        android:text="Ver contraseña"
-        android:textColor="@color/white"
-        android:textSize="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPasswordLogin" />
-
-    <TextView
-        android:id="@+id/tvForgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:layout_marginEnd="44dp"
-        android:text="¿Olvidó su contraseña?"
-        android:textColor="@color/white"
-        android:textSize="16dp"
-        android:textStyle="italic"
+        app:boxStrokeColor="@color/white"
+        app:counterEnabled="true"
+        app:counterMaxLength="40"
+        app:endIconMode="password_toggle"
+        app:helperText="Requerido*"
+        app:hintTextColor="@color/light_gray"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPasswordLogin" />
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/campoCorreo"
+        app:passwordToggleEnabled="true"
+        app:startIconDrawable="@drawable/possword"
+        app:startIconTint="@color/white">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cotraseña..."
+            android:inputType="textPassword"
+            android:outlineSpotShadowColor="@color/white"
+            android:textColor="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="222dp"
         android:layout_height="58dp"
         android:layout_marginStart="160dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="161dp"
         android:backgroundTint="@color/white"
+        android:onClick="login"
         android:text="Iniciar Sesión"
         android:textColor="@color/darknes_red"
-        android:textStyle="bold"
         android:textSize="20dp"
-        android:onClick="login"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cbShowPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/campoPassword" />
 
-    <ImageView
-        android:id="@+id/imgvIos"
-        android:layout_width="48dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="95dp"
-        android:background="@drawable/input_style"
-        android:padding="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imgvFacebook"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ios" />
-
-    <ImageView
-        android:id="@+id/imgvGoogle"
-        android:layout_width="48dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="94dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/input_style"
-        android:padding="5dp"
+    <Button
+        android:id="@+id/btnLogGoogle"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@android:color/white"
+        android:drawableLeft="@drawable/googleg_standard_color_18"
         android:onClick="loginConGoogle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imgvFacebook"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:text="Iniciar sesión con google"
+        android:textColor="@color/blue"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/google" />
-
-    <ImageView
-        android:id="@+id/imgvFacebook"
-        android:layout_width="48dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="33dp"
-        android:background="@drawable/input_style"
-        android:padding="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imgvIos"
-        app:layout_constraintStart_toEndOf="@+id/imgvGoogle"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/facebook" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

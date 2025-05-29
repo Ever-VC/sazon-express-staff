@@ -2,4 +2,5 @@
 <resources>
     <color name="bg_screen">#131217</color>
     <color name="separationLine">@color/white</color>
+    <color name="fondo_items">@color/dark_gray</color>
 </resources>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:layout_margin="10dp"
+    android:background="@color/fondo_items">
+
+    <ImageView
+        android:id="@+id/imgvShoppingCart"
+        android:layout_width="97dp"
+        android:layout_height="97dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintEnd_toStartOf="@+id/tvShoppingCartName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/food" />
+
+    <TextView
+        android:id="@+id/tvShoppingCartName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/notosans_bold"
+        android:text="Big Bacon"
+        android:textColor="@color/light_blue"
+        app:layout_constraintEnd_toStartOf="@+id/tvShoppingCartDescription"
+        app:layout_constraintStart_toEndOf="@+id/imgvShoppingCart"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvShoppingCartDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Doble queso con tocino"
+        android:textColor="@color/light_orange"
+        android:textSize="13dp"
+        app:layout_constraintStart_toEndOf="@+id/imgvShoppingCart"
+        app:layout_constraintTop_toBottomOf="@+id/tvShoppingCartName" />
+
+    <TextView
+        android:id="@+id/tvShoppingCartPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="$7.97"
+        android:textColor="@color/darknes_red"
+        android:textSize="12dp"
+        app:layout_constraintStart_toEndOf="@+id/imgvShoppingCart"
+        app:layout_constraintTop_toBottomOf="@+id/tvShoppingCartDescription" />
+
+    <LinearLayout
+        android:id="@+id/llButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="50dp"
+        android:orientation="vertical"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/ibtnMinus"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:backgroundTint="@android:color/transparent"
+            app:srcCompat="@android:drawable/ic_delete" />
+
+        <TextView
+            android:id="@+id/tvProductCountShopping"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:text="100"
+            android:textColor="@color/dark_orange"
+            android:textSize="11dp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/ibtnPlus"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:backgroundTint="@android:color/transparent"
+            app:srcCompat="@android:drawable/ic_input_add" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/etNotaPorPlatillo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Ingrese la nota..."
+        android:inputType="text"
+        android:textColor="@color/light_blue"
+        android:textColorHint="@color/light_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgvShoppingCart" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
